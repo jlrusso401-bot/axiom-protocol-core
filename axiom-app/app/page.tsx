@@ -122,42 +122,48 @@ export default function HomePage() {
           </div>
 
           {/* Input Bar */}
-          <div style={{ display: 'flex', flexShrink: 0, height: '48px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 4px 15px rgba(0,0,0,0.3)', backgroundColor: 'rgba(15, 20, 25, 0.8)' }}>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-              disabled={isLoading}
-              placeholder="Log current friction..."
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-                border: 'none',
-                color: '#F8FAFC',
-                padding: '0 16px',
-                fontSize: '14px',
-                outline: 'none',
-              }}
-            />
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              style={{
-                backgroundColor: '#E2E8F0',
-                border: 'none',
-                color: '#0F172A',
-                padding: '0 20px',
-                fontSize: '13px',
-                fontWeight: '700',
-                letterSpacing: '0.5px',
-                cursor: isLoading ? 'not-allowed' : 'pointer',
-                opacity: isLoading ? 0.7 : 1,
-                transition: 'opacity 0.2s'
-              }}
-            >
-              EXECUTE
-            </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', flexShrink: 0 }}>
+            <div style={{ display: 'flex', height: '48px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 4px 15px rgba(0,0,0,0.3)', backgroundColor: 'rgba(15, 20, 25, 0.8)' }}>
+              <input
+                type="text"
+                value={input}
+                maxLength={200}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                disabled={isLoading}
+                placeholder="Log current friction..."
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#F8FAFC',
+                  padding: '0 16px',
+                  fontSize: '14px',
+                  outline: 'none',
+                }}
+              />
+              <button
+                onClick={handleSubmit}
+                disabled={isLoading}
+                style={{
+                  backgroundColor: '#E2E8F0',
+                  border: 'none',
+                  color: '#0F172A',
+                  padding: '0 20px',
+                  fontSize: '13px',
+                  fontWeight: '700',
+                  letterSpacing: '0.5px',
+                  cursor: isLoading ? 'not-allowed' : 'pointer',
+                  opacity: isLoading ? 0.7 : 1,
+                  transition: 'opacity 0.2s'
+                }}
+              >
+                EXECUTE
+              </button>
+            </div>
+            <div style={{ textAlign: 'right', color: input.length >= 200 ? '#EF4444' : '#64748B', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+              {input.length} / 200
+            </div>
           </div>
 
           {/* Bottom Glass: Response Area */}
