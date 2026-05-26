@@ -50,7 +50,6 @@ export default function HomePage() {
     marginBottom: '16px',
   };
 
-  // Mini tactical logo for headers
   const TacticalBullet = () => (
     <svg width="14" height="14" viewBox="0 0 100 100" style={{ marginRight: '10px', flexShrink: 0, marginTop: '2px' }}>
       <circle cx="50" cy="50" r="46" fill="none" stroke="#94A3B8" strokeWidth="8"/>
@@ -58,12 +57,10 @@ export default function HomePage() {
     </svg>
   );
 
-  // Diamond bullet for list items and text blocks
   const DiamondBullet = () => (
     <div style={{ width: '6px', height: '6px', backgroundColor: '#64748B', transform: 'rotate(45deg)', marginTop: '8px', marginRight: '10px', flexShrink: 0 }} />
   );
 
-  // Updated parser: safely extracts sections
   const parseProtocolResponse = (text: string) => {
     if (!text) return null;
     if (text.includes('**Direct Reframe**')) {
@@ -79,7 +76,6 @@ export default function HomePage() {
 
   const parsedData = parseProtocolResponse(response);
 
-  // Helper to strip hallucinated markdown bullets from the AI so we don't get double bullets
   const cleanText = (text: string | undefined) => {
     if (!text) return '';
     return text.replace(/^[\*\-\•]\s*/, '');
@@ -95,8 +91,8 @@ export default function HomePage() {
         </div>
 
         {/* Header */}
-        <div style={{ padding: '30px 24px 20px', display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10, flexShrink: 0 }}>
-          <div style={{ width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ padding: '30px 24px 12px', display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10, flexShrink: 0 }}>
+          <div style={{ width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <img src="/logo.svg" alt="Axiom Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div>
@@ -105,8 +101,17 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Operational Brief */}
+        <div style={{ padding: '0 24px 20px', zIndex: 10, flexShrink: 0 }}>
+          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', padding: '12px 0', textAlign: 'center' }}>
+            <p style={{ color: '#CBD5E1', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', lineHeight: '1.6', margin: 0 }}>
+              A rapid-reference tool for mental discipline.<br />Log your point of friction. Confront the literature. Do the work.
+            </p>
+          </div>
+        </div>
+
         {/* Main Interface Area */}
-        <div style={{ flex: 1, padding: '10px 24px', display: 'flex', flexDirection: 'column', gap: '20px', overflow: 'hidden', position: 'relative', zIndex: 10 }}>
+        <div style={{ flex: 1, padding: '0 24px 10px', display: 'flex', flexDirection: 'column', gap: '20px', overflow: 'hidden', position: 'relative', zIndex: 10 }}>
           
           {/* Top Glass: Logged Friction */}
           <div style={{ ...outerGlassStyle, flexShrink: 0, minHeight: '110px' }}>
