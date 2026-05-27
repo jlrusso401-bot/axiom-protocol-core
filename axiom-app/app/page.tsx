@@ -30,13 +30,6 @@ export default function HomePage() {
     }
   };
 
-  const navItems = [
-    { name: 'THE LOG', icon: '✎' },
-    { name: 'THE ARMORY', icon: '🛡' },
-    { name: 'TRAINING', icon: '🏋' },
-    { name: 'COMMS', icon: '✉' },
-  ];
-
   const outerGlassStyle = {
     background: 'rgba(20, 25, 35, 0.75)', 
     backdropFilter: 'blur(16px)',
@@ -268,21 +261,9 @@ export default function HomePage() {
         </div>
 
         {/* Footer */}
-        <div style={{ textAlign: 'center', padding: '12px 0', zIndex: 10, flexShrink: 0 }}>
+        <div style={{ textAlign: 'center', padding: '12px 0 24px 0', zIndex: 10, flexShrink: 0 }}>
           <div style={{ color: '#94A3B8', fontSize: '13px', fontWeight: '400', marginBottom: '2px' }}>A Pocket Mentor</div>
           <div style={{ color: '#475569', fontSize: '10px', letterSpacing: '2px' }}>EST. 2026</div>
-        </div>
-
-        {/* Bottom Navigation - Spacing tightened with fixed gap */}
-        <div style={{ height: '70px', backgroundColor: '#0A0D10', borderTop: '1px solid #1E293B', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0, zIndex: 50, width: '100%' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '36px', width: '100%' }}>
-            {navItems.map((item, index) => (
-              <div key={item.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', color: index === 0 ? '#F8FAFC' : '#475569' }}>
-                <div style={{ fontSize: '18px', marginBottom: '4px' }}>{item.icon}</div>
-                <div style={{ fontSize: '10px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>{item.name}</div>
-              </div>
-            ))}
-          </div>
         </div>
 
       </div>
