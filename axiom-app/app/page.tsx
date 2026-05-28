@@ -1,10 +1,12 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 
 export default function HomePage() {
+  const router = useRouter();
   const [input, setInput] = useState('');
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState<any>(null);
   const [submittedLog, setSubmittedLog] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -12,7 +14,7 @@ export default function HomePage() {
     if (!input.trim()) return;
     setIsLoading(true);
     setSubmittedLog(input);
-    setResponse(''); 
+    setResponse(null); 
 
     try {
       const res = await fetch('/api/chat', {
@@ -27,6 +29,13 @@ export default function HomePage() {
     } finally {
       setIsLoading(false);
       setInput(''); 
+    }
+  };
+
+  const handleContinueReading = () => {
+    if (parsedData) {
+      sessionStorage.setItem('axiom_reading_data', JSON.stringify(parsedData));
+      router.push('/read');
     }
   };
 
@@ -61,20 +70,7 @@ export default function HomePage() {
     <div style={{ width: '6px', height: '6px', backgroundColor: '#64748B', transform: 'rotate(45deg)', marginTop: '8px', marginRight: '10px', flexShrink: 0 }} />
   );
 
-  const parseProtocolResponse = (text: string) => {
-    if (!text) return null;
-    if (text.includes('**Direct Reframe**')) {
-      return {
-        reframe: text.match(/\*\*Direct Reframe\*\*([\s\S]*?)(?=\*\*The Blueprint\*\*|$)/)?.[1]?.trim(),
-        blueprint: text.match(/\*\*The Blueprint\*\*([\s\S]*?)(?=\*\*The Tactical Action\*\*|$)/)?.[1]?.trim(),
-        action: text.match(/\*\*The Tactical Action\*\*([\s\S]*?)(?=\*\*The Deep Dive\*\*|$)/)?.[1]?.trim(),
-        deepDive: text.match(/\*\*The Deep Dive\*\*([\s\S]*?)$/)?.[1]?.trim(),
-      };
-    }
-    return null;
-  };
-
-  const parsedData = parseProtocolResponse(response);
+  const parsedData = response && typeof response === 'object' && response.reframe ? response : null;
 
   const cleanText = (text: string | undefined) => {
     if (!text) return '';
@@ -101,10 +97,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Progressive Disclosure: Hide Brief and Quote on execution */}
+        {/* Progressive Disclosure */}
         {!submittedLog && !isLoading && (
           <>
-            {/* Operational Brief - Spacing Reduced */}
             <div style={{ padding: '0 24px 8px', zIndex: 10, flexShrink: 0 }}>
               <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', padding: '12px 0', textAlign: 'center' }}>
                 <p style={{ color: '#CBD5E1', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', lineHeight: '1.6', margin: 0 }}>
@@ -113,7 +108,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* The Quote - Inline format, reduced padding */}
             <div style={{ margin: '0 24px 8px', padding: '10px 16px', textAlign: 'center', flexShrink: 0, backgroundColor: 'rgba(15, 20, 25, 0.6)', border: '1px solid #64748B', borderRadius: '8px' }}>
               <span style={{ color: '#CBD5E1', fontStyle: 'italic', fontSize: '13px' }}>"How long are you going to wait before you demand the best for yourself?"</span>
               <span style={{ color: '#94A3B8', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '1px', marginLeft: '8px', whiteSpace: 'nowrap' }}>— Epictetus</span>
@@ -124,7 +118,6 @@ export default function HomePage() {
         {/* Main Interface Area */}
         <div style={{ flex: 1, padding: '0 24px 0px', display: 'flex', flexDirection: 'column', gap: '6px', overflow: 'hidden', position: 'relative', zIndex: 10 }}>
           
-          {/* Top Glass: Logged Friction (Progressively Disclosed) */}
           {submittedLog && (
             <div style={{ ...outerGlassStyle, flexShrink: 0, minHeight: '100px', padding: '16px 20px' }}>
               <div style={{ color: '#F1F5F9', fontSize: '12px', fontWeight: '700', letterSpacing: '1px', marginBottom: '8px', textTransform: 'uppercase' }}>Logged Friction</div>
@@ -190,7 +183,6 @@ export default function HomePage() {
             ) : parsedData ? (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 
-                {/* Nested Glass 1: Friction Point */}
                 <div style={innerGlassStyle}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
                     <TacticalBullet />
@@ -202,13 +194,12 @@ export default function HomePage() {
                       <div style={{ flex: 1 }}>{cleanText(parsedData.reframe)}</div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'flex-start', fontStyle: 'italic', color: '#94A3B8' }}>
-                      <div style={{ width: '6px', height: '6px', marginRight: '10px', flexShrink: 0 }} /> {/* Invisible Spacer for alignment */}
+                      <div style={{ width: '6px', height: '6px', marginRight: '10px', flexShrink: 0 }} />
                       <div style={{ flex: 1 }}>{cleanText(parsedData.blueprint)}</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Nested Glass 2: Tactical Action */}
                 <div style={innerGlassStyle}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
                     <TacticalBullet />
@@ -232,7 +223,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Nested Glass 3: Deep Dive */}
                 <div style={{ ...innerGlassStyle, marginBottom: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
                     <TacticalBullet />
@@ -244,18 +234,20 @@ export default function HomePage() {
                       <div style={{ flex: 1 }}>{cleanText(parsedData.deepDive)}</div>
                     </div>
                   </div>
+                  <div style={{ marginTop: '16px', textAlign: 'right' }}>
+                    <button 
+                      onClick={handleContinueReading}
+                      style={{ backgroundColor: 'transparent', border: '1px solid #64748B', color: '#94A3B8', padding: '6px 12px', borderRadius: '4px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', cursor: 'pointer', transition: 'all 0.2s' }}>
+                      Continue Reading ↗
+                    </button>
+                  </div>
                 </div>
 
               </div>
             ) : (
-              <ReactMarkdown 
-                components={{
-                  p: ({node, ...props}) => <p style={{ marginBottom: '16px', color: '#CBD5E1', fontSize: '14px', lineHeight: '1.6' }} {...props} />,
-                  strong: ({node, ...props}) => <strong style={{ color: '#FFFFFF', fontWeight: '700' }} {...props} />
-                }}
-              >
-                {response}
-              </ReactMarkdown>
+              <div style={{ color: '#CBD5E1', fontSize: '14px', lineHeight: '1.6' }}>
+                {typeof response === 'string' ? response : 'Data format unreadable.'}
+              </div>
             )}
           </div>
         </div>
