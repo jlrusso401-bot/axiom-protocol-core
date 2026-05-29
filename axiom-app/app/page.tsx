@@ -9,6 +9,7 @@ export default function HomePage() {
   const [response, setResponse] = useState<any>(null);
   const [submittedLog, setSubmittedLog] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSubmit = async () => {
     if (!input.trim()) return;
@@ -86,14 +87,31 @@ export default function HomePage() {
           <img src="/logo.svg" alt="" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
         </div>
 
-        {/* Header */}
-        <div style={{ padding: '30px 24px 12px', display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10, flexShrink: 0 }}>
-          <div style={{ width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <img src="/logo.svg" alt="Axiom Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0px 4px 8px rgba(0,0,0,0.6))' }} />
+        {/* Header - Updated with position relative and high zIndex to stop bleed-through */}
+        <div style={{ padding: '30px 24px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 50, flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <img src="/logo.svg" alt="Axiom Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0px 4px 8px rgba(0,0,0,0.6))' }} />
+            </div>
+            <div>
+              <h1 style={{ fontSize: '18px', fontWeight: '700', color: '#FFFFFF', letterSpacing: '1.5px', margin: '0 0 2px 0', textShadow: '0px 4px 12px rgba(0, 0, 0, 0.9), 0px 1px 3px rgba(255, 255, 255, 0.1)' }}>AXIOM PROTOCOL</h1>
+              <p style={{ color: '#8892B0', fontSize: '11px', fontWeight: '500', letterSpacing: '1px', margin: 0, textTransform: 'uppercase' }}>THE UNYIELDING BASELINE</p>
+            </div>
           </div>
-          <div>
-            <h1 style={{ fontSize: '18px', fontWeight: '700', color: '#FFFFFF', letterSpacing: '1.5px', margin: '0 0 2px 0', textShadow: '0px 4px 12px rgba(0, 0, 0, 0.9), 0px 1px 3px rgba(255, 255, 255, 0.1)' }}>AXIOM PROTOCOL</h1>
-            <p style={{ color: '#8892B0', fontSize: '11px', fontWeight: '500', letterSpacing: '1px', margin: 0, textTransform: 'uppercase' }}>THE UNYIELDING BASELINE</p>
+          
+          {/* Dropdown Menu */}
+          <div style={{ position: 'relative' }} onMouseLeave={() => setIsMenuOpen(false)}>
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              style={{ backgroundColor: 'transparent', border: '1px solid #64748B', color: '#94A3B8', padding: '6px 12px', borderRadius: '4px', fontSize: '10px', fontWeight: '700', cursor: 'pointer', textTransform: 'uppercase' }}>
+              MENU ▼
+            </button>
+            {isMenuOpen && (
+              <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '8px', backgroundColor: '#0F172A', border: '1px solid #475569', borderRadius: '6px', padding: '4px', zIndex: 9999, width: '90px', display: 'flex', flexDirection: 'column', gap: '4px', boxShadow: '0 10px 25px rgba(0,0,0,0.9)' }}>
+                <button onClick={() => { router.push('/'); setIsMenuOpen(false); }} style={{ width: '100%', background: 'transparent', border: 'none', color: '#F1F5F9', padding: '6px 8px', textAlign: 'right', fontSize: '11px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1px', borderRadius: '4px' }}>PROTOCOL</button>
+                <button onClick={() => { router.push('/armory'); setIsMenuOpen(false); }} style={{ width: '100%', background: 'transparent', border: 'none', color: '#F1F5F9', padding: '6px 8px', textAlign: 'right', fontSize: '11px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1px', borderRadius: '4px' }}>ARMORY</button>
+              </div>
+            )}
           </div>
         </div>
 

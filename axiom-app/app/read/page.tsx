@@ -23,9 +23,9 @@ export default function ReadPage() {
     const isDuplicate = existingArmory.some((item: any) => item.title === data.title);
 
     if (!isDuplicate) {
+      // We now spread the entire data object so the full text is saved
       const newEntry = {
-        title: data.title,
-        author: data.author,
+        ...data,
         timestamp: new Date().toISOString()
       };
       existingArmory.push(newEntry);
@@ -72,12 +72,10 @@ export default function ReadPage() {
     <div style={{ backgroundColor: '#232D38', height: '100vh', display: 'flex', justifyContent: 'center', fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', overflow: 'hidden' }}>
       <div style={{ width: '100%', maxWidth: '420px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
         
-        {/* Background Watermark */}
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.08, zIndex: 0, width: '80%', display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
           <img src="/logo.svg" alt="" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
         </div>
 
-        {/* Header with Back Button */}
         <div style={{ padding: '30px 24px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10, flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -95,11 +93,9 @@ export default function ReadPage() {
           </button>
         </div>
 
-        {/* Main Content Area */}
         <div style={{ flex: 1, padding: '0 24px 24px', overflowY: 'auto', zIndex: 10 }}>
           <div style={{ ...outerGlassStyle, display: 'flex', flexDirection: 'column' }}>
             
-            {/* Top Glass: Connecting Quote */}
             <div style={innerGlassStyle}>
               <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <TacticalBullet />
@@ -116,7 +112,6 @@ export default function ReadPage() {
               </div>
             </div>
 
-            {/* Second Glass: Expanded Text */}
             <div style={innerGlassStyle}>
               <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <TacticalBullet />
@@ -127,7 +122,6 @@ export default function ReadPage() {
               </div>
             </div>
 
-            {/* Third Glass: Main Ideas */}
             <div style={{ ...innerGlassStyle, marginBottom: 0 }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <TacticalBullet />
@@ -143,7 +137,6 @@ export default function ReadPage() {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
               <button 
                 onClick={handleSaveToArmory}
