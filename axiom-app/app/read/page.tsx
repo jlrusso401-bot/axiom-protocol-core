@@ -123,18 +123,18 @@ export default function ReadPage() {
                 <div style={{ color: '#CBD5E1', fontSize: '12px', fontStyle: 'italic', marginBottom: '16px' }}>Host: {data.podcast.host}</div>
                 
                 {/* Audio Embed Player */}
-                <div style={{ width: '100%', height: '152px', backgroundColor: '#0F172A', borderRadius: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid #475569', marginBottom: '16px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', backgroundColor: '#0F172A', borderRadius: '12px', marginBottom: '16px', overflow: 'hidden' }}>
                    {data.podcast.embedUrl.startsWith('http') ? (
                       <iframe 
                         src={data.podcast.embedUrl} 
-                        style={{ width: '100%', maxWidth: '100%', borderRadius: '12px' }} 
+                        width="100%"
                         height="152" 
-                        frameBorder="0" 
+                        style={{ border: 'none', display: 'block' }}
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                         loading="lazy"
                       ></iframe>
                    ) : (
-                      <div style={{ textAlign: 'center' }}>
+                      <div style={{ textAlign: 'center', padding: '40px 0' }}>
                         <span style={{ color: '#64748B', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>[ AUDIO PLAYER STANDBY ]</span>
                         <div style={{ color: '#475569', fontSize: '10px', marginTop: '8px' }}>{data.podcast.embedUrl}</div>
                       </div>
