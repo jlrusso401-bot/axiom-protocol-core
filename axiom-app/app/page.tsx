@@ -87,7 +87,7 @@ export default function HomePage() {
           <img src="/logo.svg" alt="" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
         </div>
 
-        {/* Header - Updated with position relative and high zIndex to stop bleed-through */}
+        {/* Header */}
         <div style={{ padding: '30px 24px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 50, flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -107,9 +107,12 @@ export default function HomePage() {
               MENU ▼
             </button>
             {isMenuOpen && (
-              <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '8px', backgroundColor: '#0F172A', border: '1px solid #475569', borderRadius: '6px', padding: '4px', zIndex: 9999, width: '90px', display: 'flex', flexDirection: 'column', gap: '4px', boxShadow: '0 10px 25px rgba(0,0,0,0.9)' }}>
-                <button onClick={() => { router.push('/'); setIsMenuOpen(false); }} style={{ width: '100%', background: 'transparent', border: 'none', color: '#F1F5F9', padding: '6px 8px', textAlign: 'right', fontSize: '11px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1px', borderRadius: '4px' }}>PROTOCOL</button>
-                <button onClick={() => { router.push('/armory'); setIsMenuOpen(false); }} style={{ width: '100%', background: 'transparent', border: 'none', color: '#F1F5F9', padding: '6px 8px', textAlign: 'right', fontSize: '11px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1px', borderRadius: '4px' }}>ARMORY</button>
+              /* Invisible bridge added via paddingTop to prevent mouseLeave trigger */
+              <div style={{ position: 'absolute', top: '100%', right: 0, paddingTop: '6px', zIndex: 9999, width: '90px' }}>
+                <div style={{ backgroundColor: '#0F172A', border: '1px solid #475569', borderRadius: '6px', padding: '4px', display: 'flex', flexDirection: 'column', gap: '4px', boxShadow: '0 10px 25px rgba(0,0,0,0.9)' }}>
+                  <button onClick={() => { router.push('/'); setIsMenuOpen(false); }} style={{ width: '100%', background: 'transparent', border: 'none', color: '#F1F5F9', padding: '6px 8px', textAlign: 'right', fontSize: '11px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1px', borderRadius: '4px' }}>PROTOCOL</button>
+                  <button onClick={() => { router.push('/armory'); setIsMenuOpen(false); }} style={{ width: '100%', background: 'transparent', border: 'none', color: '#F1F5F9', padding: '6px 8px', textAlign: 'right', fontSize: '11px', fontWeight: '700', cursor: 'pointer', letterSpacing: '1px', borderRadius: '4px' }}>ARMORY</button>
+                </div>
               </div>
             )}
           </div>
