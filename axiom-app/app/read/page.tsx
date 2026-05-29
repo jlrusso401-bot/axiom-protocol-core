@@ -125,7 +125,14 @@ export default function ReadPage() {
                 {/* Audio Embed Player */}
                 <div style={{ width: '100%', height: '152px', backgroundColor: '#0F172A', borderRadius: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid #475569', marginBottom: '16px', overflow: 'hidden' }}>
                    {data.podcast.embedUrl.startsWith('http') ? (
-                      <iframe src={data.podcast.embedUrl} width="100%" height="152" frameBorder="0" allow="encrypted-media" style={{ borderRadius: '12px' }}></iframe>
+                      <iframe 
+                        src={data.podcast.embedUrl} 
+                        style={{ width: '100%', maxWidth: '100%', borderRadius: '12px' }} 
+                        height="152" 
+                        frameBorder="0" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy"
+                      ></iframe>
                    ) : (
                       <div style={{ textAlign: 'center' }}>
                         <span style={{ color: '#64748B', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>[ AUDIO PLAYER STANDBY ]</span>
